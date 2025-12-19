@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "ts-node src/bot.ts"
+  },
+  "dependencies": {
+    "grammy": "^2.20.0"
+  },
+  "devDependencies": {
+    "ts-node": "^11.0.0",
+    "typescript": "^5.2.0"
+  }
+}
