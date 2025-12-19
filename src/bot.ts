@@ -148,7 +148,7 @@ bot.callbackQuery("expenses", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
+
 // ADD EXPENSE
 // ==========================
 bot.callbackQuery("add", async (ctx) => {
@@ -162,7 +162,7 @@ bot.callbackQuery("add", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
+
 // UPDATE EXPENSE
 // ==========================
 bot.callbackQuery("update", async (ctx) => {
@@ -175,7 +175,7 @@ bot.callbackQuery("update", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
+
 // DELETE EXPENSE
 // ==========================
 bot.callbackQuery("delete", async (ctx) => {
@@ -188,16 +188,13 @@ bot.callbackQuery("delete", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
-// TEXT HANDLER
-// ==========================
+
 bot.on("message:text", async (ctx) => {
   const userId = ctx.from!.id;
   const s = sessions[userId];
   if (!s) return;
   const text = ctx.message.text.trim();
 
-  // --------------------------
   // LOGIN
   // --------------------------
   if (s.tempStep === "login") {
@@ -215,7 +212,6 @@ bot.on("message:text", async (ctx) => {
     return;
   }
 
-  // --------------------------
   // REGISTER
   // --------------------------
   if (s.tempStep === "register") {
@@ -241,7 +237,6 @@ bot.on("message:text", async (ctx) => {
     return;
   }
 
-  // --------------------------
   // ADD EXPENSE FLOW
   // --------------------------
   if (s.tempStep === "addAmount" && s.tempExpense) {
@@ -277,7 +272,6 @@ bot.on("message:text", async (ctx) => {
     }
   }
 
-  // --------------------------
   // DELETE EXPENSE FLOW
   // --------------------------
   if (s.tempStep === "deleteSelect") {
@@ -305,7 +299,7 @@ bot.on("message:text", async (ctx) => {
     return;
   }
 
-  // --------------------------
+
   // UPDATE EXPENSE FLOW
   // --------------------------
   if (s.tempStep === "updateSelect") {
@@ -384,7 +378,7 @@ bot.on("message:text", async (ctx) => {
   }
 });
 
-// ==========================
+
 // CALLBACKS CATEGORY (ADD/UPDATE)
 // ==========================
 bot.callbackQuery(/^addCat:.+$/, async (ctx) => {
@@ -439,16 +433,11 @@ bot.callbackQuery(/^updateCat:.+$/, async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
-// GLOBAL ERROR HANDLER
-// ==========================
+
 bot.catch((err) => console.error("⚠️ Bot error:", err));
 
-// ==========================
-// START BOT
-// ==========================
 bot.start();
-console.log("🤖 Бот запущен");
+console.log("Бот запущен");
 
 
 
