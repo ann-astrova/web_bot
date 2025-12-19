@@ -14,14 +14,9 @@ import {
   updateExpense as apiUpdateExpense,
 } from "./api.ts";
 
-// ==========================
-// BOT INIT
-// ==========================
+
 const bot = new Bot(BOT_TOKEN);
 
-// ==========================
-// KEYBOARDS
-// ==========================
 const authKeyboard = new InlineKeyboard()
   .text("🔐 Войти", "login")
   .row()
@@ -38,9 +33,7 @@ const mainKeyboard = new InlineKeyboard()
   .row()
   .text("👤 Профиль", "profile");
 
-// ==========================
-// TEMP STORAGE
-// ==========================
+
 interface TempExpense {
   id?: number;
   amount?: number;
@@ -68,17 +61,11 @@ interface UserSession {
 
 const sessions: Record<number, UserSession> = {};
 
-// ==========================
-// HELPER: проверка токенов
-// ==========================
 function ensureTokens(s: UserSession) {
   if (!s.tokens?.accessToken || !s.tokens?.refreshToken) throw new Error("NO_TOKENS");
   return s.tokens;
 }
 
-// ==========================
-// START COMMAND
-// ==========================
 bot.command("start", async (ctx) => {
   const userId = ctx.from!.id;
   sessions[userId] ??= {};
@@ -91,9 +78,7 @@ bot.command("start", async (ctx) => {
   }
 });
 
-// ==========================
-// CALLBACK HANDLERS
-// ==========================
+
 bot.callbackQuery("login", async (ctx) => {
   const userId = ctx.from!.id;
   sessions[userId] ??= {};
@@ -129,7 +114,6 @@ bot.callbackQuery("profile", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-// ==========================
 // VIEW EXPENSES
 // ==========================
 bot.callbackQuery("expenses", async (ctx) => {
@@ -151,7 +135,7 @@ bot.callbackQuery("expenses", async (ctx) => {
 
     await ctx.reply(
       expenses.map((e: any) =>
-        `${e.indexNumber}. Сумма: ${e.amount} ₽\nОписание: ${e.description}\nДата: ${e.date}\nКатегория: ${catMap.get(e.categoryId) ?? "—"}`
+        `${e.indexNumber}. Сумма: ${e.amount} ₽\nОписание: ${e.description}\nДата: ${e.date.split('T')[0]}\nКатегория: ${catMap.get(e.categoryId) ?? "—"}`
       ).join("\n\n"),
       { reply_markup: mainKeyboard }
     );
